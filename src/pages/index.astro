@@ -1,17 +1,101 @@
 ---
-
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/Hero.astro";
+import EventDetails from "../components/EventDetails.astro";
+import Countdown from "../components/Countdown.astro";
+import Gallery from "../components/Gallery.astro";
+import Location from "../components/Location.astro";
+import RSVP from "../components/RSVP.astro";
+import { invitation } from "../data/invitation.js";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout
+  title={`Bautizo de ${invitation.child.name}`}
+  description={`Te invitamos al bautizo de ${invitation.child.name}.`}
+>
+
+  <main>
+
+    <Hero />
+
+    <EventDetails />
+
+    <Countdown />
+
+    <Gallery />
+
+    <Location />
+
+    <RSVP />
+
+    <footer class="footer">
+
+    <div class="footer__ornament">
+      ✦
+    </div>
+
+    <p class="footer__small">
+      Con cariño
+    </p>
+
+    <p class="footer__name">
+      La familia de {invitation.child.name}
+    </p>
+
+    <p class="footer__date">
+      24 · 10 · 2026
+    </p>
+
+    </footer>
+
+    <style lang="scss">
+      .footer {
+        padding: 5rem 1rem 6rem;
+
+        background: var(--color-primary-dark);
+
+        color: var(--color-background);
+
+        text-align: center;
+      }
+
+      .footer__ornament {
+        margin-bottom: 1.5rem;
+
+        color: var(--color-gold);
+
+        font-size: 0.8rem;
+      }
+
+      .footer__small {
+        margin-bottom: 0.5rem;
+
+        color: var(--color-secondary);
+
+        font-size: 0.6rem;
+        font-weight: 500;
+
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+      }
+
+      .footer__name {
+        margin-bottom: 1.5rem;
+
+        font-family: var(--font-display);
+        font-size: clamp(2rem, 6vw, 3.5rem);
+      }
+
+      .footer__date {
+        margin: 0;
+
+        color: var(--color-secondary);
+
+        font-size: 0.6rem;
+        letter-spacing: 0.3em;
+      }
+    </style>
+
+  </main>
+
+</Layout>

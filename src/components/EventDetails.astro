@@ -1,0 +1,339 @@
+---
+import { invitation } from "../data/invitation.js";
+
+const { event } = invitation;
+const { name } = invitation.child;
+---
+
+<section
+  class="event"
+  id="invitacion"
+>
+  <div
+    class="event__intro"
+    data-reveal
+  >
+
+    <div class="event__ornament" aria-hidden="true">
+      <span></span>
+    </div>
+
+    <p class="eyebrow">
+      Un día especial
+    </p>
+
+    <h2
+      data-reveal
+      style="--reveal-delay: 120ms"
+    >
+      Un día para celebrar,<br />
+      <em>un momento para recordar.</em>
+    </h2>
+
+    <p
+      class="event__message"
+      data-reveal
+      style="--reveal-delay: 220ms"
+    >
+      Con mucha alegría queremos compartir contigo
+      el bautizo de <strong>{name}</strong>.
+      Será un día muy especial para nuestra familia
+      y nos encantará celebrarlo contigo.
+    </p>
+
+  </div>
+
+  <div class="event__details container">
+
+    <article
+      class="event__item"
+      data-reveal
+      style="--reveal-delay: 0ms"
+    >
+
+      <span class="event__number">
+        01
+      </span>
+
+      <div>
+        <p class="event__label">
+          Fecha
+        </p>
+
+        <p class="event__value">
+          {event.date}
+        </p>
+      </div>
+
+    </article>
+
+    <article
+      class="event__item"
+      data-reveal
+      style="--reveal-delay: 100ms"
+    >
+
+      <span class="event__number">
+        02
+      </span>
+
+      <div>
+        <p class="event__label">
+          Hora
+        </p>
+
+        <p class="event__value">
+          {event.time} hrs.
+        </p>
+      </div>
+
+    </article>
+
+    <article
+      class="event__item"
+      data-reveal
+      style="--reveal-delay: 200ms"
+    >
+
+      <span class="event__number">
+        03
+      </span>
+
+      <div>
+        <p class="event__label">
+          Ceremonia
+        </p>
+
+        <p class="event__value">
+          {event.ceremony}
+        </p>
+      </div>
+
+    </article>
+
+    <article
+      class="event__item"
+      data-reveal
+      style="--reveal-delay: 300ms"
+    >
+
+      <span class="event__number">
+        04
+      </span>
+
+      <div>
+        <p class="event__label">
+          Lugar
+        </p>
+
+        <p class="event__value">
+          {event.location}
+        </p>
+
+        <p class="event__address">
+          {event.address}
+        </p>
+      </div>
+
+    </article>
+
+  </div>
+</section>
+
+<style lang="scss">
+  .event {
+    position: relative;
+
+    padding: clamp(6rem, 12vw, 10rem) 0;
+
+    background: var(--color-background);
+  }
+
+  /*
+   * INTRO
+   */
+
+  .event__intro {
+    width: min(
+      calc(100% - 2rem),
+      760px
+    );
+
+    margin: 0 auto;
+
+    text-align: center;
+  }
+
+  .event__ornament {
+    position: relative;
+
+    width: 42px;
+    height: 42px;
+
+    margin: 0 auto 2rem;
+
+    border: 1px solid var(--color-gold);
+    border-radius: 50%;
+  }
+
+  .event__ornament::before,
+  .event__ornament::after {
+    content: "";
+
+    position: absolute;
+    top: 50%;
+
+    width: 55px;
+    height: 1px;
+
+    background: var(--color-gold);
+  }
+
+  .event__ornament::before {
+    right: calc(100% + 12px);
+  }
+
+  .event__ornament::after {
+    left: calc(100% + 12px);
+  }
+
+  .event__ornament span {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    width: 7px;
+    height: 7px;
+
+    border: 1px solid var(--color-gold);
+
+    transform:
+      translate(-50%, -50%)
+      rotate(45deg);
+  }
+
+  .eyebrow {
+    margin-bottom: 1.25rem;
+  }
+
+  h2 {
+    margin-bottom: 2rem;
+
+    color: var(--color-primary-dark);
+
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+  }
+
+  h2 em {
+    color: var(--color-primary);
+    font-weight: 400;
+  }
+
+  .event__message {
+    max-width: 560px;
+
+    margin: 0 auto;
+
+    color: var(--color-text-light);
+
+    font-size: 0.95rem;
+    line-height: 1.9;
+  }
+
+  .event__message strong {
+    color: var(--color-primary-dark);
+    font-weight: 500;
+  }
+
+  /*
+   * DETAILS
+   */
+
+  .event__details {
+    margin-top: clamp(5rem, 10vw, 8rem);
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    border-top: 1px solid var(--color-border);
+  }
+
+  .event__item {
+    min-height: 170px;
+
+    display: grid;
+    grid-template-columns: 45px 1fr;
+    align-items: center;
+    gap: 1.25rem;
+
+    padding: 2rem 1rem;
+
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .event__item:nth-child(odd) {
+    border-right: 1px solid var(--color-border);
+  }
+
+  .event__number {
+    align-self: start;
+
+    padding-top: 0.25rem;
+
+    color: var(--color-gold);
+
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+  }
+
+  .event__label {
+    margin-bottom: 0.35rem;
+
+    color: var(--color-primary-dark);
+
+    font-size: 0.65rem;
+    font-weight: 600;
+
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .event__value {
+    margin-bottom: 0.2rem;
+
+    color: var(--color-text);
+
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    line-height: 1.1;
+  }
+
+  .event__address {
+    margin: 0;
+
+    color: var(--color-text-light);
+
+    font-size: 0.75rem;
+  }
+
+  @media (max-width: 700px) {
+    .event__details {
+      grid-template-columns: 1fr;
+    }
+
+    .event__item:nth-child(odd) {
+      border-right: 0;
+    }
+
+    .event__item {
+      min-height: 140px;
+    }
+
+    h2 {
+      font-size: clamp(2.8rem, 13vw, 4.5rem);
+    }
+  }
+</style>

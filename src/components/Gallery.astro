@@ -1,0 +1,471 @@
+---
+import { invitation } from "../data/invitation.js";
+
+const { gallery } = invitation;
+const { name } = invitation.child;
+---
+
+<section class="gallery section">
+
+  <div class="container">
+
+    <header class="gallery__header">
+
+      <div>
+        <p class="eyebrow">
+          Momentos
+        </p>
+
+        <h2>
+          Un poquito<br />
+          de <em>{name}</em>
+        </h2>
+      </div>
+
+      <p class="gallery__intro">
+        Pequeños momentos que hacen
+        de este día algo todavía más especial.
+      </p>
+
+    </header>
+
+
+    <div class="gallery__grid">
+
+      <!-- Foto principal -->
+      <figure class="gallery__item gallery__item--hero" data-image-reveal>
+
+        <img
+          src={gallery[0]?.src}
+          alt={gallery[0]?.alt || `Fotografía de ${name}`}
+          loading="eager"
+        />
+
+        <figcaption>
+          <span>01</span>
+          Un día para recordar
+        </figcaption>
+
+      </figure>
+
+
+      <!-- Foto secundaria -->
+      <figure class="gallery__item gallery__item--top" data-image-reveal>
+
+        <img
+          src={gallery[1]?.src}
+          alt={gallery[1]?.alt || `Fotografía de ${name}`}
+          loading="lazy"
+        />
+
+      </figure>
+
+
+      <!-- Frase -->
+      <div
+        class="gallery__quote"
+        data-reveal="scale"
+      >
+
+        <span class="gallery__quote-mark">
+          “
+        </span>
+
+        <p>
+          Los momentos más pequeños
+          pueden convertirse
+          en los recuerdos más grandes.
+        </p>
+
+        <span class="gallery__quote-line"></span>
+
+      </div>
+
+
+      <!-- Foto secundaria -->
+      <figure class="gallery__item gallery__item--bottom" data-image-reveal>
+
+        <img
+          src={gallery[2]?.src}
+          alt={gallery[2]?.alt || `Fotografía de ${name}`}
+          loading="lazy"
+        />
+
+      </figure>
+
+
+      <!-- Foto final -->
+      <figure class="gallery__item gallery__item--last" data-image-reveal>
+
+        <img
+          src={gallery[3]?.src}
+          alt={gallery[3]?.alt || `Fotografía de ${name}`}
+          loading="lazy"
+        />
+
+      </figure>
+
+    </div>
+
+  </div>
+
+</section>
+
+<style lang="scss">
+
+  .gallery {
+    background: var(--color-background);
+  }
+
+
+  /*
+   * HEADER
+   */
+
+  .gallery__header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 3rem;
+
+    margin-bottom: 4rem;
+  }
+
+  .gallery__header h2 {
+    margin: 0;
+
+    color: var(--color-primary-dark);
+
+    font-size: clamp(3.5rem, 8vw, 6rem);
+    line-height: 0.82;
+
+    letter-spacing: -0.03em;
+  }
+
+  .gallery__header h2 em {
+    color: var(--color-primary);
+
+    font-weight: 400;
+  }
+
+  .gallery__intro {
+    max-width: 280px;
+
+    margin: 0 0 0.5rem;
+
+    color: var(--color-text-light);
+
+    font-size: 0.8rem;
+    line-height: 1.8;
+  }
+
+
+  /*
+   * GRID
+   */
+
+  .gallery__grid {
+    display: grid;
+
+    grid-template-columns:
+      minmax(0, 1.25fr)
+      minmax(0, 0.75fr);
+
+    grid-template-rows:
+      280px
+      180px
+      280px;
+
+    gap: 1rem;
+  }
+
+
+  /*
+   * IMAGES
+   */
+
+  .gallery__item {
+    position: relative;
+
+    margin: 0;
+
+    overflow: hidden;
+
+    background: var(--color-secondary);
+  }
+
+  .gallery__item img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    transition:
+      transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  .gallery__item:hover img {
+    transform: scale(1.035);
+  }
+
+
+  /*
+   * MAIN PHOTO
+   */
+
+  .gallery__item--hero {
+    grid-column: 1;
+    grid-row: 1 / 4;
+
+    min-height: 740px;
+  }
+
+  .gallery__item--hero img {
+    object-position: center;
+  }
+
+  .gallery__item--hero::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background:
+      linear-gradient(
+        to top,
+        rgba(54, 56, 50, 0.5),
+        transparent 35%
+      );
+
+    pointer-events: none;
+  }
+
+
+  /*
+   * CAPTION
+   */
+
+  .gallery__item figcaption {
+    position: absolute;
+
+    z-index: 2;
+
+    right: 1.5rem;
+    bottom: 1.5rem;
+    left: 1.5rem;
+
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+
+    color: white;
+
+    font-size: 0.65rem;
+    font-weight: 500;
+
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .gallery__item figcaption span {
+    color: var(--color-secondary);
+
+    font-family: var(--font-display);
+    font-size: 1rem;
+  }
+
+
+  /*
+   * SECONDARY PHOTOS
+   */
+
+  .gallery__item--top {
+    grid-column: 2;
+    grid-row: 1;
+
+    border-radius: 0 0 0 var(--radius-md);
+  }
+
+  .gallery__item--bottom {
+    grid-column: 2;
+    grid-row: 3;
+
+    border-radius: var(--radius-md) 0 0 0;
+  }
+
+
+  /*
+   * QUOTE
+   */
+
+  .gallery__quote {
+    position: relative;
+
+    grid-column: 2;
+    grid-row: 2;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    padding: 2rem;
+
+    background: var(--color-primary);
+
+    color: white;
+
+    overflow: hidden;
+  }
+
+  .gallery__quote-mark {
+    position: absolute;
+
+    top: -2rem;
+    right: 1rem;
+
+    color: rgba(255, 255, 255, 0.15);
+
+    font-family: var(--font-display);
+    font-size: 9rem;
+    line-height: 1;
+  }
+
+  .gallery__quote p {
+    position: relative;
+
+    z-index: 1;
+
+    max-width: 260px;
+
+    margin: 0;
+
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    line-height: 1.05;
+  }
+
+  .gallery__quote-line {
+    width: 40px;
+    height: 1px;
+
+    margin-top: 1.5rem;
+
+    background: var(--color-gold);
+  }
+
+
+  /*
+   * LAST IMAGE
+   */
+
+  .gallery__item--last {
+    display: none;
+  }
+
+
+  /*
+   * TABLET
+   */
+
+  @media (max-width: 800px) {
+
+    .gallery__header {
+      align-items: flex-start;
+      flex-direction: column;
+
+      gap: 1.5rem;
+    }
+
+    .gallery__intro {
+      max-width: 400px;
+    }
+
+    .gallery__grid {
+      grid-template-columns: 1.15fr 0.85fr;
+
+      grid-template-rows:
+        300px
+        200px
+        300px;
+    }
+
+    .gallery__item--hero {
+      min-height: 800px;
+    }
+
+  }
+
+
+  /*
+   * MOBILE
+   */
+
+  @media (max-width: 600px) {
+
+    .gallery__header {
+      margin-bottom: 2.5rem;
+    }
+
+    .gallery__header h2 {
+      font-size: clamp(3.2rem, 17vw, 5rem);
+    }
+
+    .gallery__grid {
+      display: grid;
+
+      grid-template-columns: 1fr 1fr;
+
+      grid-template-rows:
+        430px
+        180px
+        240px;
+
+      gap: 0.75rem;
+    }
+
+    .gallery__item--hero {
+      grid-column: 1 / 3;
+      grid-row: 1;
+
+      min-height: 0;
+    }
+
+    .gallery__item--top {
+      grid-column: 1;
+      grid-row: 2;
+
+      border-radius: 0;
+    }
+
+    .gallery__quote {
+      grid-column: 2;
+      grid-row: 2;
+
+      padding: 1.25rem;
+    }
+
+    .gallery__quote p {
+      font-size: 1.35rem;
+    }
+
+    .gallery__item--bottom {
+      grid-column: 1 / 3;
+      grid-row: 3;
+
+      border-radius: 0;
+    }
+
+    .gallery__item--last {
+      display: block;
+
+      grid-column: 1 / 3;
+
+      height: 240px;
+
+      margin-top: 0.75rem;
+    }
+
+  }
+
+</style>

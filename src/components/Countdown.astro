@@ -1,0 +1,260 @@
+---
+import { invitation } from "../data/invitation.js";
+
+const { dateTime } = invitation.event;
+---
+
+<section class="countdown">
+  <div class="countdown__inner">
+
+    <div class="countdown__intro">
+      <p class="eyebrow">
+        Falta muy poco
+      </p>
+
+      <h2>
+        Nos vemos en...
+      </h2>
+    </div>
+
+    <div
+      class="countdown__timer"
+      data-countdown={dateTime}
+      aria-label="Cuenta regresiva"
+    >
+
+      <div class="countdown__item">
+        <span data-days>00</span>
+        <small>Días</small>
+      </div>
+
+      <div class="countdown__separator">:</div>
+
+      <div class="countdown__item">
+        <span data-hours>00</span>
+        <small>Horas</small>
+      </div>
+
+      <div class="countdown__separator">:</div>
+
+      <div class="countdown__item">
+        <span data-minutes>00</span>
+        <small>Minutos</small>
+      </div>
+
+      <div class="countdown__separator">:</div>
+
+      <div class="countdown__item">
+        <span data-seconds>00</span>
+        <small>Segundos</small>
+      </div>
+
+    </div>
+
+    <p class="countdown__date">
+      24 · 10 · 2026
+    </p>
+
+  </div>
+</section>
+
+<script define:vars={{ dateTime }}>
+  const countdown = document.querySelector("[data-countdown]");
+
+  if (countdown) {
+    const days = countdown.querySelector("[data-days]");
+    const hours = countdown.querySelector("[data-hours]");
+    const minutes = countdown.querySelector("[data-minutes]");
+    const seconds = countdown.querySelector("[data-seconds]");
+
+    const target = new Date(dateTime).getTime();
+
+    const updateCountdown = () => {
+      const now = Date.now();
+      const difference = target - now;
+
+      if (difference <= 0) {
+        days.textContent = "00";
+        hours.textContent = "00";
+        minutes.textContent = "00";
+        seconds.textContent = "00";
+        return;
+      }
+
+      const totalSeconds = Math.floor(
+        difference / 1000
+      );
+
+      const d = Math.floor(
+        totalSeconds / 86400
+      );
+
+      const h = Math.floor(
+        (totalSeconds % 86400) / 3600
+      );
+
+      const m = Math.floor(
+        (totalSeconds % 3600) / 60
+      );
+
+      const s = totalSeconds % 60;
+
+      days.textContent = String(d).padStart(2, "0");
+      hours.textContent = String(h).padStart(2, "0");
+      minutes.textContent = String(m).padStart(2, "0");
+      seconds.textContent = String(s).padStart(2, "0");
+    };
+
+    updateCountdown();
+
+    setInterval(updateCountdown, 1000);
+  }
+</script>
+
+<style lang="scss">
+  .countdown {
+    position: relative;
+
+    padding: clamp(5rem, 10vw, 8rem) 1rem;
+
+    background: var(--color-primary-dark);
+
+    overflow: hidden;
+  }
+
+  .countdown::before {
+    content: "";
+
+    position: absolute;
+
+    top: -120px;
+    right: -120px;
+
+    width: 300px;
+    height: 300px;
+
+    border: 1px solid rgba(182, 155, 104, 0.3);
+    border-radius: 50%;
+  }
+
+  .countdown::after {
+    content: "";
+
+    position: absolute;
+
+    bottom: -180px;
+    left: -140px;
+
+    width: 340px;
+    height: 340px;
+
+    border: 1px solid rgba(182, 155, 104, 0.2);
+    border-radius: 50%;
+  }
+
+  .countdown__inner {
+    position: relative;
+    z-index: 1;
+
+    max-width: 900px;
+
+    margin: 0 auto;
+
+    text-align: center;
+  }
+
+  .countdown .eyebrow {
+    color: var(--color-secondary);
+  }
+
+  .countdown h2 {
+    margin-bottom: 3.5rem;
+
+    color: var(--color-background);
+
+    font-size: clamp(3rem, 8vw, 5rem);
+    line-height: 0.9;
+  }
+
+  .countdown__timer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: clamp(0.5rem, 3vw, 2rem);
+  }
+
+  .countdown__item {
+    min-width: 70px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .countdown__item span {
+    color: var(--color-background);
+
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 9vw, 6rem);
+    font-weight: 400;
+
+    line-height: 0.8;
+  }
+
+  .countdown__item small {
+    margin-top: 1rem;
+
+    color: var(--color-secondary);
+
+    font-size: 0.58rem;
+    font-weight: 500;
+
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .countdown__separator {
+    padding-bottom: 1.5rem;
+
+    color: var(--color-gold);
+
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 400;
+  }
+
+  .countdown__date {
+    margin: 3rem 0 0;
+
+    color: var(--color-secondary);
+
+    font-size: 0.65rem;
+    font-weight: 500;
+
+    letter-spacing: 0.35em;
+  }
+
+  @media (max-width: 500px) {
+    .countdown__timer {
+      gap: 0.15rem;
+    }
+
+    .countdown__item {
+      min-width: 58px;
+    }
+
+    .countdown__item span {
+      font-size: 2.7rem;
+    }
+
+    .countdown__item small {
+      font-size: 0.48rem;
+      letter-spacing: 0.12em;
+    }
+
+    .countdown__separator {
+      font-size: 1.8rem;
+    }
+  }
+</style>

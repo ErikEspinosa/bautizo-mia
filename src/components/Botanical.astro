@@ -1,0 +1,135 @@
+---
+const {
+  variant = "branch",
+  flip = false,
+  class: className = ""
+} = Astro.props;
+---
+
+<div
+  class:list={[
+    "botanical",
+    `botanical--${variant}`,
+    flip && "botanical--flip",
+    className
+  ]}
+  aria-hidden="true"
+>
+  {variant === "branch" && (
+    <svg
+      viewBox="0 0 220 120"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        class="botanical__stem"
+        d="M12 106C55 96 76 67 104 39C132 12 167 9 208 12"
+      />
+
+      <path
+        class="botanical__leaf"
+        d="M48 87C39 70 25 64 13 67C19 81 31 89 48 87Z"
+      />
+
+      <path
+        class="botanical__leaf"
+        d="M68 68C58 49 43 43 30 47C36 62 50 70 68 68Z"
+      />
+
+      <path
+        class="botanical__leaf"
+        d="M91 46C83 28 70 20 56 23C60 38 73 47 91 46Z"
+      />
+
+      <path
+        class="botanical__leaf"
+        d="M117 30C119 13 130 3 144 3C143 17 133 28 117 30Z"
+      />
+
+      <path
+        class="botanical__leaf"
+        d="M144 20C149 5 161 -2 174 2C170 14 159 21 144 20Z"
+      />
+
+      <path
+        class="botanical__leaf"
+        d="M79 57C94 52 105 42 106 30C93 31 82 40 79 57Z"
+      />
+
+      <path
+        class="botanical__leaf"
+        d="M45 88C57 87 67 80 72 69C59 69 49 76 45 88Z"
+      />
+    </svg>
+  )}
+
+  {variant === "small" && (
+    <svg
+      viewBox="0 0 100 60"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        class="botanical__stem"
+        d="M5 53C28 45 42 30 52 15C62 2 76 1 95 5"
+      />
+
+      <path
+        class="botanical__leaf"
+        d="M29 43C22 32 14 29 7 31C11 40 19 45 29 43Z"
+      />
+
+      <path
+        class="botanical__leaf"
+        d="M43 29C36 18 29 14 21 16C24 26 32 31 43 29Z"
+      />
+
+      <path
+        class="botanical__leaf"
+        d="M57 15C60 6 67 1 75 3C73 11 67 16 57 15Z"
+      />
+
+      <path
+        class="botanical__leaf"
+        d="M69 10C75 3 83 2 89 6C84 12 77 14 69 10Z"
+      />
+    </svg>
+  )}
+</div>
+
+<style lang="scss">
+  .botanical {
+    pointer-events: none;
+  }
+
+  .botanical svg {
+    display: block;
+
+    width: 100%;
+    height: auto;
+  }
+
+  .botanical__stem {
+    stroke: var(--color-primary-dark);
+    stroke-width: 1;
+    stroke-linecap: round;
+  }
+
+  .botanical__leaf {
+    fill: none;
+
+    stroke: var(--color-primary);
+    stroke-width: 1;
+
+    stroke-linejoin: round;
+  }
+
+  .botanical--small .botanical__stem,
+  .botanical--small .botanical__leaf {
+    stroke-width: 0.8;
+  }
+
+  .botanical--flip {
+    transform: scaleX(-1);
+  }
+</style>

@@ -1,0 +1,479 @@
+---
+import { invitation } from "../data/invitation.js";
+
+const { event } = invitation;
+---
+
+<section class="location section">
+
+  <div class="container">
+
+    <div class="location__layout">
+
+      <div
+        class="location__content"
+        data-reveal="left"
+      >
+
+        <p class="eyebrow">
+          La celebración
+        </p>
+
+        <h2>
+          ¿Dónde nos<br />
+          <em>vemos?</em>
+        </h2>
+
+        <div class="location__rule"></div>
+
+        <p class="location__label">
+          Ceremonia
+        </p>
+
+        <h3>
+          {event.location}
+        </h3>
+
+        <p class="location__address">
+          {event.address}
+        </p>
+
+        <a
+          class="location__button"
+          href={event.mapsUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span>Ver ubicación</span>
+          <span class="location__arrow" aria-hidden="true">
+            ↗
+          </span>
+        </a>
+
+      </div>
+
+
+      <div
+        class="location__visual"
+        data-reveal="right"
+      >
+
+        <div class="location__paper">
+
+          <div class="location__coordinates">
+            <span>CDMX</span>
+            <span>24 · 10 · 26</span>
+          </div>
+
+          <div class="location__map">
+
+            <div class="map__line map__line--one"></div>
+            <div class="map__line map__line--two"></div>
+            <div class="map__line map__line--three"></div>
+            <div class="map__line map__line--four"></div>
+
+            <div class="map__circle"></div>
+
+            <div class="map__pin">
+              <span></span>
+            </div>
+
+          </div>
+
+          <div class="location__caption">
+            <span>✦</span>
+            Nuestra ceremonia
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<style lang="scss">
+
+  .location {
+    background: var(--color-surface);
+  }
+
+
+  /*
+   * LAYOUT
+   */
+
+  .location__layout {
+    display: grid;
+
+    grid-template-columns:
+      minmax(0, 0.9fr)
+      minmax(0, 1.1fr);
+
+    align-items: center;
+
+    gap: clamp(3rem, 8vw, 8rem);
+  }
+
+
+  /*
+   * CONTENT
+   */
+
+  .location__content {
+    padding-left: clamp(0rem, 3vw, 3rem);
+  }
+
+  .location h2 {
+    margin: 1rem 0 2rem;
+
+    color: var(--color-primary-dark);
+
+    font-size: clamp(4rem, 8vw, 6.5rem);
+    line-height: 0.8;
+
+    letter-spacing: -0.035em;
+  }
+
+  .location h2 em {
+    color: var(--color-primary);
+
+    font-weight: 400;
+  }
+
+  .location__rule {
+    width: 55px;
+    height: 1px;
+
+    margin-bottom: 2.5rem;
+
+    background: var(--color-gold);
+  }
+
+  .location__label {
+    margin-bottom: 0.5rem;
+
+    color: var(--color-primary);
+
+    font-size: 0.62rem;
+    font-weight: 600;
+
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+  }
+
+  .location h3 {
+    margin-bottom: 0.25rem;
+
+    color: var(--color-text);
+
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    line-height: 1.1;
+  }
+
+  .location__address {
+    margin-bottom: 2rem;
+
+    color: var(--color-text-light);
+
+    font-size: 0.85rem;
+  }
+
+
+  /*
+   * BUTTON
+   */
+
+  .location__button {
+    width: fit-content;
+
+    display: inline-flex;
+    align-items: center;
+
+    gap: 2rem;
+
+    padding: 0.9rem 1.2rem;
+
+    border: 1px solid var(--color-primary-dark);
+
+    color: var(--color-primary-dark);
+
+    font-size: 0.65rem;
+    font-weight: 600;
+
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+
+    transition:
+      background-color 0.25s ease,
+      color 0.25s ease;
+  }
+
+  .location__button:hover {
+    background: var(--color-primary-dark);
+    color: white;
+  }
+
+  .location__arrow {
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+
+  /*
+   * MAP / PAPER
+   */
+
+  .location__visual {
+    position: relative;
+
+    aspect-ratio: 1 / 0.82;
+  }
+
+  .location__paper {
+    position: absolute;
+    inset: 0;
+
+    padding: 1.5rem;
+
+    background:
+      linear-gradient(
+        135deg,
+        #eee8dc,
+        #e4ddcf
+      );
+
+    box-shadow:
+      20px 25px 50px rgba(54, 56, 50, 0.08);
+
+    transform: rotate(1.5deg);
+  }
+
+  .location__paper::before {
+    content: "";
+
+    position: absolute;
+    inset: 12px;
+
+    border: 1px solid rgba(69, 84, 73, 0.18);
+
+    pointer-events: none;
+  }
+
+  .location__coordinates {
+    position: absolute;
+
+    z-index: 2;
+
+    top: 1.8rem;
+    right: 2rem;
+    left: 2rem;
+
+    display: flex;
+    justify-content: space-between;
+
+    color: var(--color-primary-dark);
+
+    font-size: 0.55rem;
+    font-weight: 600;
+
+    letter-spacing: 0.2em;
+  }
+
+
+  /*
+   * MAP LINES
+   */
+
+  .location__map {
+    position: absolute;
+    inset: 3rem 2rem 3.5rem;
+
+    overflow: hidden;
+  }
+
+  .map__line {
+    position: absolute;
+
+    height: 1px;
+
+    background: rgba(69, 84, 73, 0.22);
+
+    transform-origin: center;
+  }
+
+  .map__line--one {
+    width: 120%;
+    top: 30%;
+    left: -10%;
+
+    transform: rotate(18deg);
+  }
+
+  .map__line--two {
+    width: 110%;
+    top: 52%;
+    left: -5%;
+
+    transform: rotate(-28deg);
+  }
+
+  .map__line--three {
+    width: 100%;
+    top: 70%;
+    left: 0;
+
+    transform: rotate(8deg);
+  }
+
+  .map__line--four {
+    width: 80%;
+    top: 20%;
+    left: 10%;
+
+    transform: rotate(-55deg);
+  }
+
+
+  /*
+   * LOCATION CIRCLE
+   */
+
+  .map__circle {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    width: 150px;
+    height: 150px;
+
+    border: 1px solid rgba(69, 84, 73, 0.2);
+    border-radius: 50%;
+
+    transform: translate(-50%, -50%);
+  }
+
+  .map__circle::before,
+  .map__circle::after {
+    content: "";
+
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    border: 1px solid rgba(69, 84, 73, 0.12);
+    border-radius: 50%;
+
+    transform: translate(-50%, -50%);
+  }
+
+  .map__circle::before {
+    width: 100px;
+    height: 100px;
+  }
+
+  .map__circle::after {
+    width: 50px;
+    height: 50px;
+  }
+
+
+  /*
+   * PIN
+   */
+
+  .map__pin {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    width: 25px;
+    height: 25px;
+
+    border: 1px solid var(--color-gold);
+    border-radius: 50% 50% 50% 0;
+
+    background: var(--color-background);
+
+    transform:
+      translate(-50%, -50%)
+      rotate(-45deg);
+
+    box-shadow:
+      0 4px 12px rgba(54, 56, 50, 0.12);
+  }
+
+  .map__pin span {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: var(--color-gold);
+
+    transform: translate(-50%, -50%);
+  }
+
+
+  /*
+   * CAPTION
+   */
+
+  .location__caption {
+    position: absolute;
+
+    right: 2rem;
+    bottom: 1.8rem;
+    left: 2rem;
+
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+
+    color: var(--color-primary-dark);
+
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+  }
+
+  .location__caption span {
+    color: var(--color-gold);
+  }
+
+
+  /*
+   * MOBILE
+   */
+
+  @media (max-width: 700px) {
+
+    .location__layout {
+      grid-template-columns: 1fr;
+
+      gap: 4rem;
+    }
+
+    .location__content {
+      padding-left: 0;
+    }
+
+    .location__visual {
+      width: 94%;
+
+      margin: 0 auto;
+    }
+
+  }
+
+</style>

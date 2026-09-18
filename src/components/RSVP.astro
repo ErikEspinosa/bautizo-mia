@@ -1,0 +1,436 @@
+---
+import { invitation } from "../data/invitation.js";
+
+const { child, whatsapp } = invitation;
+---
+
+<section
+  class="rsvp section"
+  id="confirmar"
+>
+
+  <div
+    class="rsvp__inner"
+    data-reveal
+  >
+
+    <div class="rsvp__ornament">
+      <span>✦</span>
+    </div>
+
+    <p class="eyebrow">
+      Tu compañía es lo más importante
+    </p>
+
+    <h2>
+      ¿Nos acompañas?
+    </h2>
+
+    <p class="rsvp__intro">
+      Confirma tu asistencia para que podamos
+      preparar todo con mucho cariño.
+    </p>
+
+
+    <form
+      class="rsvp__form"
+      data-reveal="scale"
+      style="--reveal-delay: 150ms"
+    >
+
+      <div class="field">
+
+        <label for="guest-name">
+          Tu nombre
+        </label>
+
+        <input
+          id="guest-name"
+          name="name"
+          type="text"
+          autocomplete="name"
+          placeholder="Escribe tu nombre"
+          required
+        />
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          Número de invitados
+        </label>
+
+        <div class="counter">
+
+          <button
+            type="button"
+            class="counter__button"
+            data-minus
+            aria-label="Reducir número de invitados"
+          >
+            −
+          </button>
+
+          <output
+            class="counter__value"
+            data-count
+          >
+            1
+          </output>
+
+          <button
+            type="button"
+            class="counter__button"
+            data-plus
+            aria-label="Aumentar número de invitados"
+          >
+            +
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <button
+        type="submit"
+        class="rsvp__submit"
+      >
+        <span>Confirmar asistencia</span>
+        <span>↗</span>
+      </button>
+
+      <p
+        class="rsvp__error"
+        data-error
+        role="alert"
+      ></p>
+
+    </form>
+
+  </div>
+
+</section>
+
+<script define:vars={{
+  phone: whatsapp.phone,
+  childName: child.name
+}}>
+  const form = document.querySelector(".rsvp__form");
+  const countOutput = document.querySelector("[data-count]");
+  const minusButton = document.querySelector("[data-minus]");
+  const plusButton = document.querySelector("[data-plus]");
+  const error = document.querySelector("[data-error]");
+
+  let guestCount = 1;
+
+  const updateCount = () => {
+    countOutput.textContent = guestCount;
+  };
+
+  minusButton.addEventListener("click", () => {
+    if (guestCount > 1) {
+      guestCount -= 1;
+      updateCount();
+    }
+  });
+
+  plusButton.addEventListener("click", () => {
+    if (guestCount < 10) {
+      guestCount += 1;
+      updateCount();
+    }
+  });
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const nameInput = form.querySelector("[name='name']");
+    const name = nameInput.value.trim();
+
+    error.textContent = "";
+
+    if (!name) {
+      error.textContent = "Por favor escribe tu nombre.";
+      nameInput.focus();
+      return;
+    }
+
+    if (!phone || phone.includes("X")) {
+      error.textContent =
+        "Configura primero el número de WhatsApp en invitation.js.";
+      return;
+    }
+
+    const message = [
+      "Hola 👋",
+      "",
+      `Quiero confirmar mi asistencia al bautizo de ${childName}.`,
+      "",
+      `Nombre: ${name}`,
+      `Número de invitados: ${guestCount} ${
+        guestCount === 1 ? "persona" : "personas"
+      }`,
+      "",
+      "¡Gracias por la invitación! 🤍"
+    ].join("\n");
+
+    const url =
+      `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+
+    window.open(url, "_blank", "noopener,noreferrer");
+  });
+</script>
+
+<style lang="scss">
+
+  .rsvp {
+    position: relative;
+
+    background: var(--color-background);
+
+    text-align: center;
+
+    overflow: hidden;
+  }
+
+  .rsvp::before {
+    content: "";
+
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    width: min(80vw, 700px);
+    height: min(80vw, 700px);
+
+    border: 1px solid rgba(182, 155, 104, 0.18);
+    border-radius: 50%;
+
+    transform: translate(-50%, -50%);
+  }
+
+  .rsvp__inner {
+    position: relative;
+    z-index: 1;
+
+    width: min(
+      calc(100% - 2rem),
+      560px
+    );
+
+    margin: 0 auto;
+  }
+
+  .rsvp__ornament {
+    width: 50px;
+    height: 50px;
+
+    display: grid;
+    place-items: center;
+
+    margin: 0 auto 2rem;
+
+    border: 1px solid var(--color-gold);
+    border-radius: 50%;
+  }
+
+  .rsvp__ornament span {
+    color: var(--color-gold);
+    font-size: 0.8rem;
+  }
+
+  .rsvp .eyebrow {
+    margin-bottom: 1rem;
+  }
+
+  .rsvp h2 {
+    margin-bottom: 1.5rem;
+
+    color: var(--color-primary-dark);
+
+    font-size: clamp(4rem, 12vw, 7rem);
+    line-height: 0.8;
+  }
+
+  .rsvp__intro {
+    max-width: 420px;
+
+    margin: 0 auto 3.5rem;
+
+    color: var(--color-text-light);
+
+    font-size: 0.85rem;
+    line-height: 1.8;
+  }
+
+
+  /*
+   * FORM
+   */
+
+  .rsvp__form {
+    padding: clamp(2rem, 5vw, 3.5rem);
+
+    background: var(--color-surface);
+
+    border: 1px solid var(--color-border);
+
+    box-shadow:
+      0 20px 60px rgba(54, 56, 50, 0.05);
+
+    text-align: left;
+  }
+
+  .field {
+    margin-bottom: 2rem;
+  }
+
+  .field label {
+    display: block;
+
+    margin-bottom: 0.65rem;
+
+    color: var(--color-primary-dark);
+
+    font-size: 0.62rem;
+    font-weight: 600;
+
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .field input {
+    width: 100%;
+
+    padding: 0.9rem 0;
+
+    border: 0;
+    border-bottom: 1px solid var(--color-border);
+
+    outline: none;
+
+    background: transparent;
+
+    color: var(--color-text);
+
+    font-size: 0.9rem;
+
+    transition:
+      border-color 0.25s ease;
+  }
+
+  .field input:focus {
+    border-color: var(--color-primary);
+  }
+
+  .field input::placeholder {
+    color: #aaa8a1;
+  }
+
+
+  /*
+   * COUNTER
+   */
+
+  .counter {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .counter__button {
+    width: 38px;
+    height: 38px;
+
+    display: grid;
+    place-items: center;
+
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+
+    background: transparent;
+
+    color: var(--color-primary-dark);
+
+    font-size: 1.2rem;
+
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease;
+  }
+
+  .counter__button:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: white;
+  }
+
+  .counter__value {
+    min-width: 25px;
+
+    color: var(--color-primary-dark);
+
+    font-family: var(--font-display);
+    font-size: 2rem;
+
+    text-align: center;
+  }
+
+
+  /*
+   * SUBMIT
+   */
+
+  .rsvp__submit {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-top: 2.5rem;
+    padding: 1.1rem 1.25rem;
+
+    border: 1px solid var(--color-primary-dark);
+
+    background: var(--color-primary-dark);
+
+    color: white;
+
+    font-size: 0.65rem;
+    font-weight: 600;
+
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+
+    transition:
+      background-color 0.25s ease,
+      color 0.25s ease;
+  }
+
+  .rsvp__submit:hover {
+    background: transparent;
+    color: var(--color-primary-dark);
+  }
+
+  .rsvp__submit span:last-child {
+    font-size: 1rem;
+  }
+
+  .rsvp__error {
+    min-height: 1.2rem;
+
+    margin: 1rem 0 0;
+
+    color: #9b5c52;
+
+    font-size: 0.7rem;
+
+    text-align: center;
+  }
+
+</style>
