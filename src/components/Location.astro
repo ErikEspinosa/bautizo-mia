@@ -31,6 +31,32 @@ const { event } = invitation;
         </p>
 
         <h3>
+          {event.ceremony}
+        </h3>
+
+        <p class="location__address">
+          {event.address}
+        </p>
+
+        <a
+          class="location__button"
+          href={event.mapsUrlCeremony}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span>Ver ubicación</span>
+          <span class="location__arrow" aria-hidden="true">
+            ↗
+          </span>
+        </a>
+
+        <div class="location__rule"></div>
+
+        <p class="location__label">
+          Evento
+        </p>
+
+        <h3>
           {event.location}
         </h3>
 
@@ -40,7 +66,7 @@ const { event } = invitation;
 
         <a
           class="location__button"
-          href={event.mapsUrl}
+          href={event.mapsUrlEvent}
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -62,7 +88,7 @@ const { event } = invitation;
 
           <div class="location__coordinates">
             <span>CDMX</span>
-            <span>24 · 10 · 26</span>
+            <span>21 · 11 · 26</span>
           </div>
 
           <div class="location__map">
